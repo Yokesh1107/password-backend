@@ -32,12 +32,12 @@ router.post('/login', async (req, res) => {
         if (compare) {
             jwt.sign({exp:Math.floor(Date.now()/1000)+(60*60),username,id:user._id},secret,{},async(err,token)=>{
                 if(err)throw err
-                res.cookie('user',username,,{
+                res.cookie('user',username,{
           secure:true,
             sameSite: "none",
          
         })
-                res.cookie('token',token,,{
+                res.cookie('token',token,{
           secure:true,
             sameSite: "none",
          
@@ -50,12 +50,12 @@ router.post('/login', async (req, res) => {
     }
 })
 router.post('/logout',async(req,res)=>{
-    res.cookie('user','',,{
+    res.cookie('user','',{
           secure:true,
             sameSite: "none",
          
         })
-    res.cookie('token','',,{
+    res.cookie('token','',{
           secure:true,
             sameSite: "none",
          
