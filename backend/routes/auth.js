@@ -32,8 +32,16 @@ router.post('/login', async (req, res) => {
         if (compare) {
             jwt.sign({exp:Math.floor(Date.now()/1000)+(60*60),username,id:user._id},secret,{},async(err,token)=>{
                 if(err)throw err
-                res.cookie('user',username)
-                res.cookie('token',token).json('logged in')
+                res.cookie('user',username,,{
+          secure:true,
+            sameSite: "none",
+         
+        })
+                res.cookie('token',token,,{
+          secure:true,
+            sameSite: "none",
+         
+        }).json('logged in')
             })
             // return res.status(200).json(user._id)
         }
@@ -42,8 +50,16 @@ router.post('/login', async (req, res) => {
     }
 })
 router.post('/logout',async(req,res)=>{
-    res.cookie('user','')
-    res.cookie('token','').json('ok')
+    res.cookie('user','',,{
+          secure:true,
+            sameSite: "none",
+         
+        })
+    res.cookie('token','',,{
+          secure:true,
+            sameSite: "none",
+         
+        }).json('ok')
 })
 
 module.exports = router
